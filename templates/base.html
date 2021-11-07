@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> U-TAD </title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <style>
+
+div.post-tabs {
+    margin-top: 16px;
+}
+ul.posts {
+    list-style-type: none;
+    padding: 0px;
+    margin: 16px 0px 0px 0px;
+    border-top: 1px solid #e0e0e0;
+}
+div.post-tabs ul.posts {
+    margin: 0px;
+    border-top: none;
+}
+ul.posts li.post {
+    padding: 8px;
+    border-bottom: 1px solid #e0e0e0;
+}
+ul.posts li.post:hover {
+    background-color: #f0f0f0;
+}
+div.post-date {
+    float: right;
+}
+div.post-author {
+    font-weight: bold;
+}
+div.post-thumbnail {
+    position: absolute;
+}
+div.post-content {
+    margin-left: 48px;
+    min-height: 48px;
+    margin-right: 48px;
+}
+
+div.pagination {
+    width: 100%;
+    text-align: right;
+    padding: 0px;
+    margin: 0px;
+}
+div.flask-pagedown-preview {
+    margin: 10px 0px 10px 0px;
+    border: 1px solid #e0e0e0;
+    padding: 4px;
+}
+div.flask-pagedown-preview h1 {
+    font-size: 140%;
+}
+div.flask-pagedown-preview h2 {
+    font-size: 130%;
+}
+div.flask-pagedown-preview h3 {
+    font-size: 120%;
+}
+.post-body h1 {
+    font-size: 140%;
+}
+.post-body h2 {
+    font-size: 130%;
+}
+.post-body h3 {
+    font-size: 120%;
+}
+
+      </style>
+
+
+      </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">U-TAD</a>
+        </div>
+        <ul class="nav navbar-nav">
+
+
+        {% if current_user.is_authenticated %}
+              <li class={% if module=='home' %}"active"{%else%}""{%endif%}><a href="/">Home</a></li>
+
+              {% if current_user.profile in ('admin','staff','student') %}
+                  <li class={% if module=='module001' %}"active"{%else%}""{%endif%}><a href="/course">Course</a></li>
+                  <li class={% if module=='module002' %}"active"{%else%}""{%endif%}><a href="/board">Discussion Board</a></li>
+              {% endif %}
+
+              {% if current_user.profile in ('admin','staff','professor', 'student') %}
+                  <li class={% if module=='module003' %}"active"{%else%}""{%endif%}><a href="/assignment">Assignment</a></li>
+              {% endif %}
+              {% if current_user.profile in ('admin') %}
+                  <li><a href="/admin">Admin</a></li>
+              {% endif %}
+              <li> <a href={{url_for('logout')}}>Logout</a></li>
+
+        {% else %}
+              <li class={% if module=='home' %}"active"{%else%}""{%endif%}><a href="/">Home</a></li>
+              <li class={% if module=='login' %}"active"{%else%}""{%endif%}><a href={{url_for('login')}}>Login</a></li>
+              <li class={% if module=='signup' %}"active"{%else%}""{%endif%}><a href={{url_for('signup')}}>Sign Up</a></li>
+        {% endif %}
+
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning">
+                {{message}}
+            </div>
+        {% endfor%}
+    </div>
+
+
+
+    {% block content %} {% endblock %}
+
+
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
+
+	<script>
+		$(document).ready(function() {
+			$('#myTable').DataTable({
+			    "colReorder": true,
+			    responsive: true,
+                dom: 'Bfrtip',
+                buttons: [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5'
+                ]
+			});
+		} );
+    </script>
+
+</body>
+

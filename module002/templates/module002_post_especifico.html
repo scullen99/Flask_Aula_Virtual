@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+
+    <div class="container">
+    <h1>Welcome to {{course.name}} discussion board</h1>
+    </div>
+    <br>
+
+    <div class="container">
+	    <form class="form-signin" method="POST" action="{{url_for('module002.module002_post_course', course_id=course.id)}}">
+	        {{ form.hidden_tag() }}
+	        {{ wtf.form_field(form.body)}}
+	     <button class="btn btn-primary" type="submit"> Create Post </button>
+	     </form>
+	 </div>
+	 <br>
+
+    <div class="container">
+    <ul class="posts">
+        {% for post in posts %}
+            {% if not post.hidden %}
+            <br>
+            <li class="post">
+                <div class="post-content">
+                    <div class="post-author"><h5>{{ post.username }}</h5></div>
+                    <div class="post-body">
+                            {{ post.body }}
+                    </div>
+                    <div class="post-date">{{ post.timestamp }}</div>
+
+                    {% if post.author_id == current_user.id %}
+
+                        <div class="container">
+            	            <form class="" method="POST" action="">
+            	                {{ form2.hidden_tag() }}
+            	                <input type="text" name="id" value="{{post.id}}" hidden>
+                    	        <button class="btn btn-secondary btn-sm" type="submit"> Hide comment </button>
+            	            </form>
+            	        </div>
+
+                    {% endif %}
+
+                </div>
+            </li>
+            <br>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    </div>
+
+
+
+{% endblock %}

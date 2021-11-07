@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<h1> Upload assignment </h1>
+        <div class="box py-3 boxaligncenter submissionsummarytable">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th class="cell c0" scope="row">Calificación</th>
+                        <td class="submissionnotgraded cell c1 lastcol">{% if not entrega.nota %} Sin calificar {% else %}{{ entrega.nota }} {% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th class="cell c0" scope="row">Fecha de entrega</th>
+                        <td class="cell c1 lastcol">{{ entrega.date_modified }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    <div class="box py-3 generalbox submissionaction">
+        {% if entrega %}
+            <div class="singlebutton">
+                <form method="post">
+                <input type="text" name="del" value="1" hidden>
+                <button type="submit" style="background-color: grey;" class="btn btn-secondary">Elimina el archivo</button>
+                </form>
+            </div>
+
+        {% else %}
+            <div class="singlebutton">
+                <h4>Upload assignment</h4>
+                <form method="POST" enctype="multipart/form-data">
+                    <p><input type="file" name="file"></p>
+                    <p><input type="submit" value="Submit"></p>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+    <div class="container">
+
+	<h1>{{assignment.name}}</h1>
+
+    {% for entreg in entrega %}
+        {% if not entreg.nota %}
+            <div class="box py-3 boxaligncenter submissionsummarytable">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th class="cell c0" scope="row">Usuario</th>
+                            <td class="submissionnotgraded cell c1 lastcol">{{entreg.user}}</td>
+                        </tr>
+                        <tr>
+                            <th class="cell c0" scope="row">Calificación</th>
+                            <td class="submissionnotgraded cell c1 lastcol">{% if entreg.nota == None %}Sin calificar {% else %}{{ entreg.nota }} {% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th class="cell c0" scope="row">Fecha de entrega</th>
+                            <td class="cell c1 lastcol">{{ entreg.date_modified }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+
+                 <div  class="container">
+            	    <form class="" method="POST" action="">
+            	        {{ form2.hidden_tag() }}
+            	        <input type="text" name="user" value="{{entreg.user}}" hidden>
+            	     <button class="btn btn-sm btn-primary" type="submit"> Download Assignment </button>
+            	     </form>
+            	 </div>
+            </div>
+
+            <div class="container">
+        	    <form class="form-signin" method="POST" action="">
+        	        {{ form.hidden_tag() }}
+        	        {{ wtf.form_field(form.name)}}
+        	        <input type="text" name="user" value="{{entreg.user}}" hidden>
+        	     <button class="btn btn-lg btn-primary btn-block" type="submit"> Update grade </button>
+        	     </form>
+        	</div>
+            <br>
+
+        {% endif %}
+
+    {% endfor %}
+    </div>
+
+{% endblock %}

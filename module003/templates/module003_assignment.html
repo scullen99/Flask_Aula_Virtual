@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+	<h1>Assignments</h1>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+              {% for row in rows %}
+                    <li><a href="http://alexgarcy98.pythonanywhere.com/assignment/{{row.course_id}}">{{row.course_name}}</a></li>
+              {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}
