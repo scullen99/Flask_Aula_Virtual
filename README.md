@@ -12,7 +12,7 @@ flask --version
 
 Lanzar servidor en local:
 ```
-python3 app.py
+python3 flask_app_running.py
 ```
 
 ```
