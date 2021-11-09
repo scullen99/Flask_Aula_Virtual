@@ -5,16 +5,16 @@
 ## <a href="https://flask.palletsprojects.com/en/2.0.x/"> Sitio Oficial Flask </a>
 
 Instalar Flask:
-```
+```python
 pip install flask
 ```
 
 Comprobar versión:
-```
+```python
 flask --version
 ```
 
 Lanzar servidor en local:
-```
+```python
 python3 flask_app_running.py
 ```
